@@ -75,15 +75,16 @@ hcimage(illData);
 
 %% Process the face files in a loop
 
-for ii=1:nFiles
+for ii = 1:nFiles
     
     %% Read the file
     hFile = [fileNames{ii},'.img'];
+    fprintf('Reading %s\n',hFile);
     if exist(hFile,'file'), [img,infoScene] = hcReadHyspex(hFile); 
     else, error('Could not find %s\n',hFile);
     end
     
-    %% Read the avelength and the scaling parameter in info.description{18}
+    %% Read the wavelength and the scaling parameter in info.description{18}
     wave = infoScene.wavelength;
     scaleScene = str2double(infoScene.description{18}(12:end));
     if isnan(scaleScene)
@@ -117,6 +118,7 @@ for ii=1:nFiles
     
     % Read the hypercube data from the white board. The header is in
     % infoIll. The 18th line and 12:end contain the scale factor.
+    disp('Analyzing illuminant data');
     [illuminantHC, illuminantRect] = hcimageCrop(illData,sceneRect);
     scaleIll = str2double(infoIll.description{18}(12:end));
     illuminantHC = (double(illuminantHC)/scaleIll);
@@ -167,11 +169,13 @@ for ii=1:nFiles
     oFiles = fullfile(saveDir,saveNames{ii});
     pFiles = fullfile(saveDir,paramNames{ii});
     
-    % Use as many basis functions as needed to get this much variance
-    % explained
-    varExplained = 0.999;
-    sceneToFile(oFiles,scene,varExplained);
-    fprintf('Saved %s\n',oFiles);
+    % If we set varExplained, the nBases is contained in the mcCOEF
+    % variable (3rd dimension) 
+    % If we set nBases the function returns the varExplained
+    % varExplained = 0.999;  sceneToFile(oFiles,scene,varExplained);
+    nBases = 6;
+    varExplained = sceneToFile(oFiles,scene,nBases);
+    fprintf('Saved %s with var explained %.4f\n',oFiles,varExplained);
     
     %% Save the parameters
     params.varExplained     = varExplained;
@@ -179,6 +183,7 @@ for ii=1:nFiles
     params.spatialSpread    = spatialSpread;
     params.scaleScene       = scaleScene;
     params.sceneRect        = sceneRect;
+    params.nBases           = nBases;
     
     fprintf('Appending and saving all the parameter values.\n');
     save(oFiles,'params','-append')

@@ -315,12 +315,12 @@ for ii=1:size(fileList.names,1)
     fprintf('Mean illuminant energy: %f watts/sr/nm/m2\n',test);
     if test > 100, warning('Illuminant energy too high'); end
     
-    %%     
-%     scene = sceneSet(scene,'name','Stanford Memorial Church');
-%     scene = sceneAdjustLuminance(scene,1000);
-%     vcReplaceAndSelectObject(scene); 
-% note that Memorial Church was too big to save, could only save compressed
-% file
+    %%
+    %     scene = sceneSet(scene,'name','Stanford Memorial Church');
+    %     scene = sceneAdjustLuminance(scene,1000);
+    %     vcReplaceAndSelectObject(scene);
+    % note that Memorial Church was too big to save, could only save compressed
+    % file
     
     %% Save an auxiliary file with all the parameters selected here.
     
