@@ -162,6 +162,8 @@ for ii = 1:nFiles
     %% Rotate and name the scene
     scene = sceneRotate(scene,'ccw');
     scene = sceneSet(scene,'name',saveNames{ii});
+    scene = sceneSet(scene,'distance',3);
+    scene = sceneSet(scene,'hfov',5);
     % sceneWindow(scene);
     
     %% Compress and save

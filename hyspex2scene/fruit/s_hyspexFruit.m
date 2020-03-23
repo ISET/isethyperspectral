@@ -107,6 +107,8 @@ for ii = 1:nFiles
     %% Rotate and name the scene
     scene = sceneRotate(scene,'ccw');  % Opposite direction from faces
     scene = sceneSet(scene,'name',saveNames{ii});
+    scene = sceneSet(scene,'distance',3);
+    scene = sceneSet(scene,'hfov',40);
     % sceneWindow(scene);
     
     %% Compress and save
