@@ -98,14 +98,17 @@ end
   orig = sceneGet(scene,'illuminant photons');
   ieNewGraphWin; 
   loglog(orig(:),illPhotons(:)); identityLine;
+  grid on; xlabel('Original illuminant photons');
+  ylabel('New estimate illuminant photons');
   grid on;
 
   % Plot
   scenePlot(scene,'illuminant photons'); 
   plotRadiance(wave,illPhotons);
 
-  scene = sceneSet(scene,'illuminant photons',ill);
-  sceneWindow(scene);
-
+  % Change the photons in the illuminant if you like, and then save it
+  scene = sceneSet(scene,'illuminant photons',illPhotons);
+  % SAVE HERE
+  
 %}
 %% END
