@@ -6,31 +6,29 @@
 %
 % This is the actual chart we used in the experiments.
 %
-%  We are wondering if we should change the ISET infrastructure,
-%  which is based on the other MCC data, and use these measurements
-%  instead?
+% We seem to be using these for our infrastructre
 %
-% See macbethReadReflectance 
+% See also
+%   macbethReadReflectance 
 
 %% Initialize
 ieInit
 
-% wDir = fullfile(isetRootPath,'local','facesHyper');
-wDir = fullfile(isetRootPath,'local','hyperspectral');
-chdir(wDir);
-
 %% The spectral reflectance of the MCC 
-mcc = load('macbethChart');
-% for ii=1:24
-%     disp(ii)
-%     plot(mcc.wavelength,mcc.data(:,4))
-%     pause
-% end
+[mcc,wave] = ieReadSpectra('macbethChart');
+% Number 4 is the white one.
+% plot(mcc.wavelength,mcc.data)
 
-mccWhite.wavelength = mcc.wavelength;
-mccWhite.reflectance = mcc.data(:,4);
-vcNewGraphWin;
-plot(mccWhite.wavelength,mccWhite.reflectance)
+%% Not sure why this is here. It plots and saves the hyperspectral white surface
+
+mccWhite.wavelength = wave;
+mccWhite.reflectance = mcc(:,4);
+
+ieNewGraphWin;
+plot(mccWhite.wavelength,mccWhite.reflectance);
+xlabel('Wave'),ylabel('Reflectance'); grid on
+
+%%
 save mccWhite mccWhite
 
 %%
