@@ -7,3 +7,6 @@ This repository has the provenance for how we transform the Hyspex data into ISE
 The scripts also illustrate how we use the hypercube (hc) functions that are built into ISETCam to analyze the hyperspectral data.
 
 We are now in the process of placing the multispectral scene data on the Stanford Digital Repository site.
+
+Finally, we will place the high dynamic range (HDR) images on the Stanford Digital Repository site.
+
