@@ -44,14 +44,18 @@ sz2002 = [
 %% For each reflectance data set in the 2002 data set
 chdir(d);
 if ~exist(fullfile(d,'2002'),'dir'),mkdir('2002'); end
+chdir('2002');
 
-for ii=1:length(urls)
+for ii=1:length(urls2002)
     %  Download it
     [p,fname,e] = fileparts(urls2002{ii});
     zipfilename = [fname,e];
+
+    fprintf('Downloading %s',zipfilename);
     websave(zipfilename,urls2002{ii});
     
     % Unzip it to the directory with the base name
+    disp('Unzipping')
     unzip(zipfilename);
     
     % fname = sprintf('scene%d',ii);    
@@ -69,7 +73,7 @@ for ii=1:length(urls)
     
     % Make an empty scene with the proper name and illuminant
     scene = sceneCreate('empty');
-    scene = sceneSet(scene,'name',sprintf('Manchester_2002_scene%d',ii));
+    scene = sceneSet(scene,'name',sprintf('Manchester_2002_%s',fname));
     scene = sceneSet(scene,'wave',wave);
     scene = sceneSet(scene,'illuminant',illuminantCreate('D65',wave));
     
@@ -82,6 +86,8 @@ for ii=1:length(urls)
     
     % Crop the scene
     scene = sceneCrop(scene,sz2002(ii,:));
+    
+    % sceneWindow(scene);
     
     % Now, write out scene
     mType = 'canonical';
